@@ -1,0 +1,3 @@
+const encoder = new TextEncoder();
+function toBase64(bytes: Uint8Array) { let binary = ""; for (const byte of bytes) binary += String.fromCharCode(byte); return btoa(binary); }
+export async function hashPassword(password: string) { const salt = crypto.getRandomValues(new Uint8Array(16)); const key = await crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits"]); const bits = await crypto.subtle.deriveBits({ name:"PBKDF2", hash:"SHA-256", salt, iterations:210_000 }, key, 256); return { passwordHash:toBase64(new Uint8Array(bits)), passwordSalt:toBase64(salt) }; }
