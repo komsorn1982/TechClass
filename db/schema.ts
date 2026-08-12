@@ -1,4 +1,3 @@
-// Intentionally empty by default.
-// Add Drizzle tables here when the site actually needs a database.
-// See examples/d1/db/schema.ts for an opt-in example.
-export {};
+import { integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+export const students = sqliteTable("students", { id: integer("id").primaryKey({ autoIncrement: true }), authUserId: text("auth_user_id").notNull(), email: text("email").notNull(), studentCode: text("student_code").notNull(), firstName: text("first_name").notNull(), lastName: text("last_name").notNull(), gradeLevel: integer("grade_level").notNull(), classroom: text("classroom").notNull(), createdAt: integer("created_at", { mode: "timestamp" }).notNull() }, t => [uniqueIndex("idx_students_auth_user_id").on(t.authUserId), uniqueIndex("idx_students_email").on(t.email), uniqueIndex("idx_students_student_code").on(t.studentCode)]);
+export const courses = sqliteTable("courses", { id: integer("id").primaryKey({ autoIncrement: true }), code: text("code").notNull(), name: text("name").notNull(), gradeLevel: integer("grade_level").notNull(), semester: integer("semester").notNull(), description: text("description").notNull(), lessonCount: integer("lesson_count").notNull().default(0) }, t => [uniqueIndex("idx_courses_code").on(t.code)]);
