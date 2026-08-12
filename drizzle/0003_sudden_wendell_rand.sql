@@ -1,0 +1,1 @@
+ALTER TABLE `students` ADD `avatar_key` text;

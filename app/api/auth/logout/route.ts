@@ -1,2 +1,2 @@
-import { NextResponse } from "next/server";
-export async function POST(){const response=NextResponse.json({ok:true});response.cookies.set("techclass_session","",{httpOnly:true,sameSite:"lax",path:"/",maxAge:0});return response;}
+import { eq } from "drizzle-orm";import { cookies } from "next/headers";import { NextResponse } from "next/server";import { getDb } from "../../../../db";import { ensureAuthSchema } from "../../../../db/initialize";import { sessions } from "../../../../db/schema";import { hashSessionToken } from "../../../lib/password";
+export async function POST(){const token=(await cookies()).get("techclass_session")?.value;if(token){await ensureAuthSchema();await getDb().delete(sessions).where(eq(sessions.tokenHash,await hashSessionToken(token)))}const response=NextResponse.json({ok:true});response.cookies.set("techclass_session","",{httpOnly:true,sameSite:"lax",path:"/",maxAge:0});return response;}

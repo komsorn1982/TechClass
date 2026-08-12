@@ -12,6 +12,7 @@ export async function ensureAuthSchema() {
   if (!names.has("username")) await db.prepare("ALTER TABLE students ADD COLUMN username TEXT").run();
   if (!names.has("password_hash")) await db.prepare("ALTER TABLE students ADD COLUMN password_hash TEXT").run();
   if (!names.has("password_salt")) await db.prepare("ALTER TABLE students ADD COLUMN password_salt TEXT").run();
+  if (!names.has("avatar_key")) await db.prepare("ALTER TABLE students ADD COLUMN avatar_key TEXT").run();
   await db.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_students_username ON students(username)").run();
   await db.prepare(`CREATE TABLE IF NOT EXISTS sessions (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE, token_hash TEXT NOT NULL, expires_at INTEGER NOT NULL, created_at INTEGER NOT NULL)`).run();
   await db.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_sessions_token_hash ON sessions(token_hash)").run();
