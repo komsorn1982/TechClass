@@ -1,0 +1,3 @@
+import { redirect } from "next/navigation";import { Header } from "../components/Header";import { getCurrentStudent } from "../lib/session";import { ProfileEditor } from "./ProfileEditor";
+export const dynamic="force-dynamic";
+export default async function ProfilePage(){const student=await getCurrentStudent();if(!student)redirect("/login");return <main><Header/><section className="profile-shell wrap"><div className="profile-heading"><span className="mini">บัญชีนักเรียน</span><h1>ข้อมูลโปรไฟล์</h1><p>ดูและแก้ไขข้อมูลส่วนตัว รูปโปรไฟล์ และข้อมูลสำหรับเข้าสู่ระบบ</p></div><ProfileEditor student={{...student,avatarUrl:student.avatarKey?"/api/profile/avatar":null}}/></section></main>}
