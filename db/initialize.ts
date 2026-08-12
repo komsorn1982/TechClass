@@ -17,5 +17,10 @@ export async function ensureAuthSchema() {
   await db.prepare(`CREATE TABLE IF NOT EXISTS sessions (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE, token_hash TEXT NOT NULL, expires_at INTEGER NOT NULL, created_at INTEGER NOT NULL)`).run();
   await db.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_sessions_token_hash ON sessions(token_hash)").run();
   await db.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_student_id ON sessions(student_id)").run();
+  await db.prepare(`CREATE TABLE IF NOT EXISTS teachers (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, first_name TEXT NOT NULL, last_name TEXT NOT NULL, username TEXT NOT NULL, password_hash TEXT NOT NULL, password_salt TEXT NOT NULL, avatar_key TEXT, created_at INTEGER NOT NULL)`).run();
+  await db.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_teachers_username ON teachers(username)").run();
+  await db.prepare(`CREATE TABLE IF NOT EXISTS teacher_sessions (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, teacher_id INTEGER NOT NULL REFERENCES teachers(id) ON DELETE CASCADE, token_hash TEXT NOT NULL, expires_at INTEGER NOT NULL, created_at INTEGER NOT NULL)`).run();
+  await db.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_teacher_sessions_token_hash ON teacher_sessions(token_hash)").run();
+  await db.prepare("CREATE INDEX IF NOT EXISTS idx_teacher_sessions_teacher_id ON teacher_sessions(teacher_id)").run();
   initialized = true;
 }
