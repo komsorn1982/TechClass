@@ -1,0 +1,7 @@
+import { Header } from "../../components/Header";
+import { CoursePlayer } from "./CoursePlayer";
+import { lessons } from "./course-data";
+
+export default function DesignTechnologyM1Page(){
+ return <><Header/><main className="dt-course dt-edtech"><section className="dt-hero-new"><div className="wrap dt-hero-grid"><div className="dt-hero-copy"><span className="dt-course-chip">ว21103 · ห้องเรียนเทคโนโลยี</span><h1>การออกแบบ<br/><em>และเทคโนโลยี</em></h1><p>เรียนรู้ผ่านการคิด ลงมือทำ และสะท้อนผล ตามแนวทาง Thinking School</p><div className="dt-meta-row"><span>มัธยมศึกษาปีที่ 1</span><span>20 ชั่วโมง</span><span>100 คะแนน</span></div><div className="dt-welcome"><b>พร้อมเรียนรู้วันนี้หรือยัง?</b><a href="#learning-path">เริ่มเรียนเลย <i>→</i></a></div></div><div className="dt-hero-art"><div className="dt-float-badge badge-one"><b>20</b><span>บทเรียน</span></div><div className="dt-float-badge badge-two"><b>7</b><span>หน่วยเรียนรู้</span></div><img src="/course-hero-3d.png" alt="นักเรียนกำลังเรียนเทคโนโลยีกับหุ่นยนต์และแท็บเล็ต"/></div></div></section><section className="wrap dt-score-cards" aria-label="สัดส่วนคะแนน"><article><i>70</i><div><small>คะแนนระหว่างเรียน</small><b>เรียน · เกม · ใบงาน · แบบทดสอบ</b></div></article><article><i>30</i><div><small>คะแนนปลายภาค</small><b>ประเมินความรู้และการประยุกต์ใช้</b></div></article><article className="dt-mission-card"><i>+50</i><div><small>ภารกิจวันนี้</small><b>เริ่มบทเรียนและสะสม XP แรกของคุณ</b></div></article></section><div id="learning-path"><CoursePlayer lessons={lessons}/></div></main></>
+}

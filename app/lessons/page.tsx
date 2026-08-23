@@ -1,0 +1,2 @@
+import{Header}from"../components/Header";import{LessonCatalog}from"./LessonCatalog";
+export default function LessonsPage(){return <><Header/><main className="lessons-shell"><section className="lesson-hero wrap"><div><span>TECHCLASS · COURSE CATALOG</span><h1>บทเรียนของเรา</h1><p>เรียนรู้ผ่านเนื้อหา กิจกรรม Thinking School แบบทดสอบ และเกมที่ลงมือทำได้จริง</p></div><div className="lesson-hero-mark">&lt;/&gt;</div></section><section className="lesson-catalog wrap"><LessonCatalog/></section></main></>}
