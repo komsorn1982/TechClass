@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./interactive-cursor.css";
 
 export const metadata: Metadata = {
   title: "TechClass — เรียนคอมพิวเตอร์ให้สนุก",
