@@ -20,13 +20,32 @@ export function ProjectDiscoveryFlow(props:{hour:number;initialStage:number;onFi
 }
 
 function LegacyDiscoveryFlow({hour,initialStage,onFinish}:{hour:number;initialStage:number;onFinish:()=>void}){
- const[stage]=useState(initialStage),[classify,setClassify]=useState<Record<number,boolean>>({}),[words,setWords]=useState<string[]>([]),[compare,setCompare]=useState<Record<number,string>>({}),[types,setTypes]=useState<Record<number,string>>({}),[order,setOrder]=useState<string[]>([]),[plan,setPlan]=useState<Record<number,number>>({}),[exit,setExit]=useState<Record<number,number>>({}),[feedback,setFeedback]=useState(""),[wordAttempts,setWordAttempts]=useState(0),[wordRevealed,setWordRevealed]=useState(false);
+ const[stage]=useState(initialStage),[classify,setClassify]=useState<Record<number,boolean>>({}),[words,setWords]=useState<string[]>([]),[compare,setCompare]=useState<Record<number,string>>({}),[types,setTypes]=useState<Record<number,string>>({}),[order,setOrder]=useState<string[]>([]),[plan,setPlan]=useState<Record<number,number>>({}),[exit,setExit]=useState<Record<number,number>>({}),[feedback,setFeedback]=useState(""),[wordAttempts,setWordAttempts]=useState(0),[wordOutcome,setWordOutcome]=useState<"playing"|"correct"|"revealed">("playing");
  const stages=["แยกให้ชัด","ประกอบความหมาย","ลองเปรียบเทียบ","รู้จัก 4 ประเภท","เรียงเส้นทาง","ออกแบบโครงงาน","สรุปความรู้","Exit Ticket"];
  function next(){setFeedback("");if(stage<stages.length-1)window.location.href=`/lessons/science-project-m2/lesson/activity/${stage+2}?hour=${hour}`}
  function checkClassify(){const ok=classifyCards.every((x,i)=>classify[i]===x[1]);setFeedback(ok?"ยอดเยี่ยม! สิ่งที่เป็นโครงงานต้องมีคำถามและใช้ข้อมูลจริง":"ยังมีการ์ดบางใบสลับกลุ่ม ลองดูว่าได้ตั้งคำถามและเก็บข้อมูลจริงหรือไม่");if(ok)setTimeout(next,750)}
  const definitionWords=["ความสงสัยหรือปัญหา","กระบวนการทางวิทยาศาสตร์","เป็นระบบ","ข้อมูลและหลักฐานจริง"];
- function addWord(w:string){if(!wordRevealed&&!words.includes(w))setWords(v=>[...v,w])}
- function checkWords(){const ok=words.join("|")===definitionWords.join("|");if(ok){setWords([...definitionWords]);setWordRevealed(true);setFeedback("ถูกต้อง! ระบบแสดงเฉลยที่ถูกต้องไว้ให้แล้ว อ่านทบทวน แล้วกด “ไปต่อ” เมื่อพร้อม");return}const attempts=wordAttempts+1;setWordAttempts(attempts);if(attempts>=3){setWords([...definitionWords]);setWordRevealed(true);setFeedback("ตอบผิดครบ 3 ครั้งแล้ว ระบบแสดงเฉลยที่ถูกต้องให้แล้ว อ่านทบทวนให้เข้าใจ แล้วกด “ไปต่อ” เมื่อพร้อม")}else{setFeedback(`ยังไม่ถูก ลองเรียงใหม่อีกครั้ง (${attempts}/3): เริ่มจากอะไร → ใช้อะไร → ทำอย่างไร → สรุปจากอะไร`)}}
+ function addWord(w:string){if(wordOutcome==="playing"&&!words.includes(w))setWords(v=>[...v,w])}
+ function resetWords(){if(wordOutcome!=="playing")return;setWords([]);setFeedback("")}
+ function checkWords(){
+  if(wordOutcome!=="playing"||words.length<4)return;
+  const ok=words.join("|")===definitionWords.join("|");
+  if(ok){
+   setWords([...definitionWords]);
+   setWordOutcome("correct");
+   setFeedback("ถูกต้อง! คำตอบของเธอถูกต้อง ระบบแสดงเฉลยไว้ให้ทบทวนแล้ว กด “ไปต่อ” เมื่อพร้อม");
+   return;
+  }
+  const attempts=wordAttempts+1;
+  setWordAttempts(attempts);
+  if(attempts>=3){
+   setWords([...definitionWords]);
+   setWordOutcome("revealed");
+   setFeedback("ตอบผิดครบ 3 ครั้งแล้ว ระบบแสดงเฉลยที่ถูกต้องไว้ให้ทบทวน กด “ไปต่อ” เมื่อพร้อม");
+   return;
+  }
+  setFeedback(`ยังไม่ถูก (${attempts}/3) ลองใหม่อีกครั้ง: เริ่มจากอะไร → ใช้อะไร → ทำอย่างไร → สรุปจากอะไร`);
+ }
  function checkCompare(){const ok=compareCards.every((x,i)=>compare[i]===x[1]);setFeedback(ok?"ชัดเจนแล้ว! โครงงานเปิดโอกาสให้นักเรียนออกแบบการศึกษาเอง":"ลองดูว่าใครเป็นผู้กำหนดคำถามและวิธีศึกษา");if(ok)setTimeout(next,750)}
  function checkTypes(){const ok=projectTypes.every((x,i)=>types[i]===x.name);setFeedback(ok?"ครบทั้ง 4 ประเภทแล้ว! ระดับ ม.2 จะพบโครงงานทดลอง สำรวจ และสิ่งประดิษฐ์บ่อยที่สุด":"จับคู่จากลักษณะงาน: เปลี่ยนตัวแปร–เก็บข้อมูล–สร้างของ–สร้างคำอธิบาย");if(ok)setTimeout(next,750)}
  function chooseStep(x:string){if(order.includes(x))return;const expected=processSteps[order.length];if(x===expected){setOrder(v=>[...v,x]);setFeedback("")}else setFeedback("ขั้นนี้ยังไม่ถึง ลองมองหาสิ่งที่ต้องทำก่อน")}
@@ -47,7 +66,7 @@ function LegacyDiscoveryFlow({hour,initialStage,onFinish}:{hour:number;initialSt
  const score=exitQuestions.reduce((n,q,i)=>n+(exit[i]===q.a?1:0),0);
  return <section id="discovery-flow" className="sci-discovery-flow"><header><div><small>DISCOVERY PATH</small><h2>{stages[stage]}</h2><p>ภารกิจ {stage+2} จาก 9</p></div><b>{stage+1}<span>/{stages.length}</span></b></header><div className="sci-flow-track">{stages.map((x,i)=><i title={x} className={i<stage?"done":i===stage?"active":""} key={x}/>)}</div>
  {stage===0&&<div className="sci-flow-panel"><h3>อะไรคือโครงงานวิทยาศาสตร์?</h3><p>อ่านแต่ละสถานการณ์ แล้วแตะเลือกกลุ่มที่สัมพันธ์กัน</p><div className="sci-classify-cards">{classifyCards.map((x,i)=><article key={x[0]}><b>{x[0]}</b><div><button className={classify[i]===true?"active":""} onClick={()=>setClassify(v=>({...v,[i]:true}))}>เป็นโครงงาน</button><button className={classify[i]===false?"active":""} onClick={()=>setClassify(v=>({...v,[i]:false}))}>ยังไม่เป็น</button></div></article>)}</div><button className="sci-flow-check" disabled={Object.keys(classify).length<6} onClick={checkClassify}>ตรวจการจัดกลุ่ม</button></div>}
- {stage===1&&<div className="sci-flow-panel"><h3>ประกอบความหมายด้วยคำสำคัญ</h3><p>แตะคำตามลำดับเพื่อเติมประโยค</p><div className="sci-definition"><span>โครงงานเริ่มจาก</span><b>{words[0]||"________"}</b><span>ใช้</span><b>{words[1]||"________"}</b><span>ค้นหาคำตอบอย่าง</span><b>{words[2]||"________"}</b><span>และสรุปจาก</span><b>{words[3]||"________"}</b></div><div className="sci-word-bank">{[definitionWords[2],definitionWords[0],definitionWords[3],definitionWords[1]].map(w=><button disabled={wordRevealed||words.includes(w)} onClick={()=>addWord(w)} key={w}>{w}</button>)}</div><footer>{wordRevealed?<button className="sci-flow-check" onClick={next}>ไปต่อ →</button>:<><button onClick={()=>{setWords([]);setFeedback("")}}>เริ่มเรียงใหม่</button><button disabled={words.length<4} onClick={checkWords}>ตรวจความหมาย</button></>}</footer></div>}
+ {stage===1&&<div className="sci-flow-panel"><h3>ประกอบความหมายด้วยคำสำคัญ</h3><p>แตะคำตามลำดับเพื่อเติมประโยค</p>{wordOutcome!=="playing"&&<div className="sci-answer-state"><strong>{wordOutcome==="correct"?"✓ ถูกต้อง":"เฉลย"}</strong><span>{wordOutcome==="correct"?"ตอบถูกภายใน 3 ครั้ง":"ตอบผิดครบ 3 ครั้ง"}</span></div>}<div className="sci-definition"><span>โครงงานเริ่มจาก</span><b>{words[0]||"________"}</b><span>ใช้</span><b>{words[1]||"________"}</b><span>ค้นหาคำตอบอย่าง</span><b>{words[2]||"________"}</b><span>และสรุปจาก</span><b>{words[3]||"________"}</b></div><div className="sci-word-bank">{[definitionWords[2],definitionWords[0],definitionWords[3],definitionWords[1]].map(w=><button disabled={wordOutcome!=="playing"||words.includes(w)} onClick={()=>addWord(w)} key={w}>{w}</button>)}</div><footer>{wordOutcome!=="playing"?<button className="sci-flow-check" onClick={next}>ไปต่อ →</button>:<><button onClick={resetWords}>เริ่มเรียงใหม่</button><button disabled={words.length<4} onClick={checkWords}>ตรวจความหมาย</button></>}</footer></div>}
  {stage===2&&<div className="sci-flow-panel"><h3>การทดลองตามใบงาน หรือโครงงาน?</h3><div className="sci-compare-cards">{compareCards.map((x,i)=><article key={x[0]}><b>{x[0]}</b><div><button className={compare[i]==="ใบงาน"?"active":""} onClick={()=>setCompare(v=>({...v,[i]:"ใบงาน"}))}>การทดลองตามใบงาน</button><button className={compare[i]==="โครงงาน"?"active":""} onClick={()=>setCompare(v=>({...v,[i]:"โครงงาน"}))}>โครงงานวิทยาศาสตร์</button></div></article>)}</div><button className="sci-flow-check" disabled={Object.keys(compare).length<6} onClick={checkCompare}>ตรวจการเปรียบเทียบ</button></div>}
  {stage===3&&<div className="sci-flow-panel"><h3>จับคู่ตัวอย่างกับโครงงาน 4 ประเภท</h3><div className="sci-type-match">{projectTypes.map((x,i)=><article key={x.name}><i>{x.icon}</i><p>{x.example}</p><div>{projectTypes.map(type=><button className={types[i]===type.name?"active":""} onClick={()=>setTypes(v=>({...v,[i]:type.name}))} key={type.name}>{type.name}</button>)}</div></article>)}</div><button className="sci-flow-check" disabled={Object.keys(types).length<4} onClick={checkTypes}>ตรวจการจับคู่</button></div>}
  {stage===4&&<div className="sci-flow-panel"><h3>สร้างเส้นทางการทำโครงงาน</h3><p>แตะขั้นตอนที่ควรเกิดขึ้นเป็นลำดับถัดไป</p><div className="sci-timeline-built">{order.map((x,i)=><span key={x}><b>{i+1}</b>{x}</span>)}</div><div className="sci-step-bank">{[processSteps[3],processSteps[0],processSteps[6],processSteps[2],processSteps[7],processSteps[4],processSteps[1],processSteps[5]].map(x=><button disabled={order.includes(x)} onClick={()=>chooseStep(x)} key={x}>{x}</button>)}</div><button className="sci-flow-check" onClick={checkOrder}>ตรวจเส้นทาง</button></div>}
