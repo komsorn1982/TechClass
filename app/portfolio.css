@@ -175,3 +175,28 @@
     padding-top:0;
   }
 }
+
+/* Desktop footer: lock CONTACT block to the exact horizontal center */
+@media(min-width:1051px){
+  .pa-footer .footer-pro-contact{
+    grid-column:2;
+    justify-self:center;
+    align-self:start;
+    width:300px;
+    max-width:300px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .pa-footer .footer-pro-contact h3{
+    width:100%;
+    text-align:center;
+  }
+
+  .pa-footer .footer-pro-contact .contact-row{
+    width:100%;
+    max-width:300px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+}
