@@ -54,3 +54,13 @@
   .contact-row{grid-template-columns:38px 1fr}
   .contact-icon{width:36px;height:36px}
 }
+
+/* Footer layout after removing Quick Links */
+.footer-pro{grid-template-columns:1.2fr 1.2fr .7fr;gap:42px}
+@media(max-width:1050px){
+  .footer-pro{grid-template-columns:1fr 1.2fr;gap:28px}
+  .footer-pro-quote{display:none}
+}
+@media(max-width:760px){
+  .footer-pro{grid-template-columns:1fr;gap:30px}
+}
