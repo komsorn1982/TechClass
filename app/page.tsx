@@ -77,17 +77,7 @@ export default function Home() {
           <p>พื้นที่แห่งการเรียนรู้ แบ่งปัน และพัฒนาวิชาชีพครู<br/>เพื่อผู้เรียนที่ดีกว่าในอนาคต</p>
         </section>
 
-        <section className="footer-pro-links">
-          <h3>QUICK LINKS</h3>
-          <nav>
-            <a href="#home"><span>01</span>HOME</a>
-            <a href="#profile"><span>02</span>PROFILE</a>
-            <a href="#pa"><span>03</span>PA</a>
-            <a href="#challenge"><span>04</span>CHALLENGE</a>
-            <a href="#video"><span>05</span>VIDEO</a>
-            <a href="#evidence"><span>06</span>EVIDENCE</a>
-          </nav>
-        </section>
+        
 
         <section className="footer-pro-contact">
           <h3>CONTACT</h3>
