@@ -67,6 +67,47 @@ export default function Home() {
 
     <section className="about-strip" id="about"><div className="pa-container about-grid"><div className="avatar">คศ</div><div><b>ABOUT ME</b><h3>นายคมศร อุดมเพ็ญ</h3><p>ครู วิทยฐานะครูชำนาญการพิเศษ</p><small>กลุ่มสาระการเรียนรู้วิทยาศาสตร์และเทคโนโลยี • โรงเรียนธาตุทองอำนวยวิทย์</small></div><blockquote>“ ออกแบบการเรียนรู้ด้วยเทคโนโลยี เพื่อให้ผู้เรียนรู้ที่จะคิดเป็น ทำเป็น แก้ปัญหาเป็น และสร้างสรรค์ได้ ”<small>Komsorn U.</small></blockquote><a className="yellow-btn" href="#profile">ดูประวัติและผลงานเพิ่มเติม →</a></div></section>
 
-    <footer className="pa-footer"><div className="pa-container footer-grid"><div><div className="footer-brand"><i>▱</i><span>DIGITAL PA PORTFOLIO 2569<small>Technology • Innovation • Learning</small></span></div><p>พื้นที่แห่งการเรียนรู้ แบ่งปัน และพัฒนาวิชาชีพครู<br/>เพื่อผู้เรียนที่ดีกว่าในอนาคต</p></div><div><b>QUICK LINKS</b><nav><a href="#home">HOME</a><a href="#profile">PROFILE</a><a href="#pa">PA</a><a href="#challenge">CHALLENGE</a><a href="#video">VIDEO</a><a href="#evidence">EVIDENCE</a></nav></div><div><b>CONTACT</b><p>👤 นายคมศร อุดมเพ็ญ<br/>🏫 ครู วิทยฐานะครูชำนาญการพิเศษ<br/>📍 โรงเรียนธาตุทองอำนวยวิทย์<br/>องค์การบริหารส่วนจังหวัดสกลนคร</p></div><aside>“ Technology<br/>Innovation<br/>Learning<br/>for Better People ”<em>━</em></aside></div><div className="copyright">© 2026 Komsorn Udomphen • Digital PA Portfolio</div></footer>
+    <footer className="pa-footer">
+      <div className="pa-container footer-pro">
+        <section className="footer-pro-brand" aria-label="Digital PA Portfolio">
+          <div className="footer-brand">
+            <i aria-hidden="true">▱</i>
+            <span>DIGITAL PA PORTFOLIO 2569<small>Technology • Innovation • Learning</small></span>
+          </div>
+          <p>พื้นที่แห่งการเรียนรู้ แบ่งปัน และพัฒนาวิชาชีพครู<br/>เพื่อผู้เรียนที่ดีกว่าในอนาคต</p>
+        </section>
+
+        <section className="footer-pro-links">
+          <h3>QUICK LINKS</h3>
+          <nav>
+            <a href="#home"><span>01</span>HOME</a>
+            <a href="#profile"><span>02</span>PROFILE</a>
+            <a href="#pa"><span>03</span>PA</a>
+            <a href="#challenge"><span>04</span>CHALLENGE</a>
+            <a href="#video"><span>05</span>VIDEO</a>
+            <a href="#evidence"><span>06</span>EVIDENCE</a>
+          </nav>
+        </section>
+
+        <section className="footer-pro-contact">
+          <h3>CONTACT</h3>
+          <div className="contact-row">
+            <span className="contact-icon" aria-hidden="true">●</span>
+            <div><small>ชื่อ-สกุล</small><strong>นายคมศร อุดมเพ็ญ</strong></div>
+          </div>
+          <div className="contact-row">
+            <span className="contact-icon" aria-hidden="true">◆</span>
+            <div><small>ตำแหน่ง</small><strong>ครู วิทยฐานะครูชำนาญการพิเศษ</strong></div>
+          </div>
+          <div className="contact-row">
+            <span className="contact-icon" aria-hidden="true">▲</span>
+            <div><small>สถานศึกษา</small><strong>โรงเรียนธาตุทองอำนวยวิทย์<br/>องค์การบริหารส่วนจังหวัดสกลนคร</strong></div>
+          </div>
+        </section>
+
+        <aside className="footer-pro-quote">“ Technology<br/>Innovation<br/>Learning<br/><b>for Better People</b> ”<em>━</em></aside>
+      </div>
+      <div className="copyright">© 2026 Komsorn Udomphen • Digital PA Portfolio</div>
+    </footer>
   </main>;
 }
