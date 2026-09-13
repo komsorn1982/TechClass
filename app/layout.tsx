@@ -1,13 +1,3 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import "./interactive-cursor.css";
-import "./discovery-answer.css";
-
-export const metadata: Metadata = {
-  title: "TechClass — เรียนคอมพิวเตอร์ให้สนุก",
-  description: "พื้นที่เรียนรู้วิชาคอมพิวเตอร์และเทคโนโลยีสำหรับคนรุ่นใหม่",
-};
-
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="th"><body>{children}</body></html>;
-}
+import type { Metadata } from "next";import "./globals.css";import "./portfolio.css";
+export const metadata: Metadata={title:"Digital PA Portfolio 2569 | นายคมศร อุดมเพ็ญ",description:"Digital PA Portfolio 2569 — Technology • Innovation • Learning"};
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="th"><body>{children}</body></html>}
