@@ -207,25 +207,3 @@
     transform:translateX(15%);
   }
 }
-
-/* Desktop footer: place CONTACT at 65% of full viewport width (15% right of exact center) */
-@media(min-width:1051px){
-  .pa-footer{
-    position:relative;
-  }
-  .pa-footer .footer-pro-contact{
-    position:absolute !important;
-    left:65% !important;
-    top:36px !important;
-    width:300px !important;
-    max-width:300px !important;
-    margin:0 !important;
-    transform:translateX(-50%) !important;
-    justify-self:auto !important;
-    align-self:auto !important;
-    z-index:2;
-  }
-  .pa-footer .footer-pro-contact h3{
-    text-align:center !important;
-  }
-}
