@@ -200,3 +200,10 @@
     margin-right:auto;
   }
 }
+
+/* Desktop footer: move CONTACT group 15% to the right */
+@media(min-width:1051px){
+  .pa-footer .footer-pro-contact{
+    transform:translateX(15%);
+  }
+}
